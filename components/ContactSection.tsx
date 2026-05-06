@@ -1,4 +1,4 @@
-import { Phone, Mail, Instagram, Facebook } from 'lucide-react'
+import { Instagram, Facebook } from 'lucide-react'
 
 export default function ContactSection() {
   return (
@@ -16,14 +16,9 @@ export default function ContactSection() {
           Estamos sempre disponíveis para si.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-          <a href="tel:+351265000000" className="btn-gold">
-            <Phone className="w-4 h-4" />
-            Ligar Agora
-          </a>
-          <a href="mailto:guga@barbeariaguga.pt" className="btn-outline">
-            <Mail className="w-4 h-4" />
-            Enviar Email
+        <div className="flex items-center justify-center mb-12">
+          <a href="/marcacoes" className="btn-gold">
+            Fazer Marcação Online
           </a>
         </div>
 

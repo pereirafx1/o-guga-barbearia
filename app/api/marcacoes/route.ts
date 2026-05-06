@@ -14,22 +14,16 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { nome, telefone, email, servico, data, hora, notas } = body
+    const { nome, telefone, servico, data, hora, notas } = body
 
-    if (!nome || !telefone || !email || !servico || !data || !hora) {
+    if (!nome || !telefone || !servico || !data || !hora) {
       return NextResponse.json(
         { error: 'Campos obrigatórios em falta' },
         { status: 400 }
       )
     }
 
-    // Basic validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      return NextResponse.json({ error: 'Email inválido' }, { status: 400 })
-    }
-
-    const marcacao = await saveMarcacao({ nome, telefone, email, servico, data, hora, notas })
+    const marcacao = await saveMarcacao({ nome, telefone, servico, data, hora, notas })
     return NextResponse.json(marcacao, { status: 201 })
   } catch {
     return NextResponse.json({ error: 'Erro interno do servidor' }, { status: 500 })

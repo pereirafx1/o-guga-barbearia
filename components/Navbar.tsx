@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Menu, X, Scissors } from 'lucide-react'
+import Image from 'next/image'
+import { Menu, X } from 'lucide-react'
 
 const links = [
   { href: '#servicos', label: 'Serviços' },
@@ -32,9 +33,15 @@ export default function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 border border-gold/60 flex items-center justify-center group-hover:border-gold transition-colors duration-300">
-            <Scissors className="w-4 h-4 text-gold" />
+        <Link href="/" className="flex items-center gap-2 group">
+          <div className="relative w-12 h-12 flex-shrink-0">
+            <Image
+              src="/logo.png"
+              alt="O Guga Barbearia"
+              fill
+              className="object-contain drop-shadow-[0_0_6px_rgba(201,168,76,0.3)]"
+              priority
+            />
           </div>
           <div className="leading-none">
             <span className="block font-serif text-base font-bold text-cream tracking-wider">O GUGA</span>

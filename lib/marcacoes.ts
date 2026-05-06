@@ -7,7 +7,6 @@ export interface Marcacao {
   id: string
   nome: string
   telefone: string
-  email: string
   servico: string
   data: string
   hora: string

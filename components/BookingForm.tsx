@@ -26,7 +26,6 @@ export default function BookingForm() {
   const [form, setForm] = useState({
     nome: '',
     telefone: '',
-    email: '',
     servico: '',
     data: '',
     hora: '',
@@ -59,7 +58,7 @@ export default function BookingForm() {
       }
 
       setStatus('success')
-      setForm({ nome: '', telefone: '', email: '', servico: '', data: '', hora: '', notas: '' })
+      setForm({ nome: '', telefone: '', servico: '', data: '', hora: '', notas: '' })
     } catch (err) {
       setStatus('error')
       setErrorMsg(err instanceof Error ? err.message : 'Erro desconhecido')
@@ -110,7 +109,7 @@ export default function BookingForm() {
         </div>
 
         {/* Telefone */}
-        <div>
+        <div className="sm:col-span-2">
           <label className="block font-sans text-[10px] tracking-widest uppercase text-gold mb-2">
             Telefone *
           </label>
@@ -121,22 +120,6 @@ export default function BookingForm() {
             onChange={handleChange}
             required
             placeholder="+351 9XX XXX XXX"
-            className="input-dark"
-          />
-        </div>
-
-        {/* Email */}
-        <div>
-          <label className="block font-sans text-[10px] tracking-widest uppercase text-gold mb-2">
-            Email *
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            required
-            placeholder="o-seu@email.pt"
             className="input-dark"
           />
         </div>
@@ -234,7 +217,7 @@ export default function BookingForm() {
       </button>
 
       <p className="font-sans text-[10px] text-cream-muted text-center mt-4">
-        Após o envio, receberá confirmação por telefone ou email.
+        Após o envio, receberá confirmação por telefone.
       </p>
     </form>
   )

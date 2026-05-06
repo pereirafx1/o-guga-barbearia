@@ -1,10 +1,9 @@
-import { MapPin, Phone, Mail, Clock } from 'lucide-react'
+import { MapPin, Phone, Clock } from 'lucide-react'
 
-// Praça Marquês de Pombal 26, 2900-562 Setúbal
-// Coordinates: 38.5244° N, -8.8882° W
-// Google Maps embed with satellite view + 45° tilt via pb= params
+// Praça Marquês de Pombal 26, 2900-562 Setúbal — 38.5244° N, -8.8882° W
+// !1f45  → tilt 45°  |  !5e1 → satellite imagery  |  !1d300 → close zoom for 3D buildings
 const MAPS_EMBED_URL =
-  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3116.4!2d-8.8882!3d38.5244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd194a22f2d5f0c3%3A0x5c3b6e3e6f2a1b4a!2sPra%C3%A7a%20Marqu%C3%AAs%20de%20Pombal%2026%2C%202900-562%20Set%C3%BAbal!5e1!3m2!1spt-PT!2spt!4v1700000000000!5m2!1spt-PT!2spt&pb=!1m14!1m12!1m3!1d3116!2d-8.8882!3d38.5244!2m3!1f45!2f0!3f0!3m2!1i1024!2i768!4f13.1'
+  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d300!2d-8.8882!3d38.5244!2m3!1f45!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd194a22f2d5f0c3%3A0x5c3b6e3e6f2a1b4a!2sPra%C3%A7a%20Marqu%C3%AAs%20de%20Pombal%2026%2C%202900-562%20Set%C3%BAbal!5e1!3m2!1spt!2spt!4v1746550000000!5m2!1spt!2spt'
 
 const info = [
   {
@@ -17,12 +16,6 @@ const info = [
     label: 'Telefone',
     value: '+351 265 000 000',
     href: 'tel:+351265000000',
-  },
-  {
-    icon: Mail,
-    label: 'Email',
-    value: 'guga@barbeariaguga.pt',
-    href: 'mailto:guga@barbeariaguga.pt',
   },
   {
     icon: Clock,

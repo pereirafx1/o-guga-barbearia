@@ -231,7 +231,7 @@ export default function AdminDashboard() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-charcoal-light/40">
-                    {['Nome', 'Contacto', 'Serviço', 'Data / Hora', 'Estado', 'Ações'].map((h) => (
+                    {['Nome', 'Telefone', 'Serviço', 'Data / Hora', 'Estado', 'Ações'].map((h) => (
                       <th
                         key={h}
                         className="text-left font-sans text-[10px] tracking-widest uppercase text-gold px-6 py-4"
@@ -258,7 +258,6 @@ export default function AdminDashboard() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="font-sans text-xs text-cream">{m.telefone}</div>
-                          <div className="font-sans text-xs text-cream-muted">{m.email}</div>
                         </td>
                         <td className="px-6 py-4">
                           <span className="font-sans text-xs text-cream">{m.servico}</span>

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Scissors } from 'lucide-react'
+import Image from 'next/image'
 
 export default function Footer() {
   return (
@@ -8,9 +8,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-8 h-8 border border-gold/50 flex items-center justify-center">
-                <Scissors className="w-3.5 h-3.5 text-gold" />
+            <div className="flex items-center gap-2 mb-4">
+              <div className="relative w-10 h-10 flex-shrink-0">
+                <Image
+                  src="/logo.png"
+                  alt="O Guga Barbearia"
+                  fill
+                  className="object-contain"
+                />
               </div>
               <div>
                 <span className="block font-serif text-sm font-bold text-cream">O GUGA</span>
@@ -56,11 +61,6 @@ export default function Footer() {
               <li>
                 <a href="tel:+351265000000" className="font-sans text-xs text-cream-muted hover:text-gold transition-colors">
                   +351 265 000 000
-                </a>
-              </li>
-              <li>
-                <a href="mailto:guga@barbeariaguga.pt" className="font-sans text-xs text-cream-muted hover:text-gold transition-colors">
-                  guga@barbeariaguga.pt
                 </a>
               </li>
               <li className="font-sans text-xs text-cream-muted mt-3">
