@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
-import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { CheckCircle, AlertCircle, Loader2, Clock } from 'lucide-react'
 
 const SERVICOS = [
   'Corte Clássico',
@@ -23,6 +23,8 @@ type Status = 'idle' | 'loading' | 'success' | 'error'
 export default function BookingForm() {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
+  const [horasOcupadas, setHorasOcupadas] = useState<string[]>([])
+  const [loadingHoras, setLoadingHoras] = useState(false)
   const [form, setForm] = useState({
     nome: '',
     telefone: '',
@@ -33,6 +35,25 @@ export default function BookingForm() {
   })
 
   const today = new Date().toISOString().split('T')[0]
+
+  // Fetch occupied hours whenever date changes
+  useEffect(() => {
+    if (!form.data) {
+      setHorasOcupadas([])
+      return
+    }
+    setLoadingHoras(true)
+    setHorasOcupadas([])
+    // Reset hour if it was previously selected
+    setForm((prev) => ({ ...prev, hora: '' }))
+
+    fetch(`/api/disponibilidade?data=${form.data}`)
+      .then((r) => r.json())
+      .then((data) => setHorasOcupadas(data.horasOcupadas ?? []))
+      .catch(() => setHorasOcupadas([]))
+      .finally(() => setLoadingHoras(false))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.data])
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -59,6 +80,7 @@ export default function BookingForm() {
 
       setStatus('success')
       setForm({ nome: '', telefone: '', servico: '', data: '', hora: '', notas: '' })
+      setHorasOcupadas([])
     } catch (err) {
       setStatus('error')
       setErrorMsg(err instanceof Error ? err.message : 'Erro desconhecido')
@@ -85,6 +107,9 @@ export default function BookingForm() {
       </div>
     )
   }
+
+  const horasDisponiveis = HORAS.filter((h) => !horasOcupadas.includes(h))
+  const todasOcupadas = form.data && !loadingHoras && horasDisponiveis.length === 0
 
   return (
     <form onSubmit={handleSubmit} className="card-dark p-8 md:p-10">
@@ -163,19 +188,73 @@ export default function BookingForm() {
         <div>
           <label className="block font-sans text-[10px] tracking-widest uppercase text-gold mb-2">
             Hora *
+            {loadingHoras && (
+              <Loader2 className="inline w-3 h-3 ml-2 animate-spin text-cream-muted" />
+            )}
           </label>
           <select
             name="hora"
             value={form.hora}
             onChange={handleChange}
             required
-            className="input-dark appearance-none cursor-pointer"
+            disabled={!form.data || loadingHoras}
+            className="input-dark appearance-none cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            <option value="" disabled>Escolha uma hora</option>
-            {HORAS.map((h) => (
-              <option key={h} value={h}>{h}</option>
-            ))}
+            <option value="" disabled>
+              {!form.data
+                ? 'Escolha primeiro a data'
+                : loadingHoras
+                ? 'A carregar...'
+                : 'Escolha uma hora'}
+            </option>
+            {HORAS.map((h) => {
+              const ocupada = horasOcupadas.includes(h)
+              return (
+                <option key={h} value={h} disabled={ocupada}>
+                  {h}{ocupada ? ' — Ocupado' : ''}
+                </option>
+              )
+            })}
           </select>
+
+          {/* Visual hour picker — shown after date is chosen */}
+          {form.data && !loadingHoras && (
+            <div className="mt-3 grid grid-cols-3 gap-1.5">
+              {HORAS.map((h) => {
+                const ocupada = horasOcupadas.includes(h)
+                const selected = form.hora === h
+                return (
+                  <button
+                    key={h}
+                    type="button"
+                    disabled={ocupada}
+                    onClick={() => !ocupada && setForm((prev) => ({ ...prev, hora: h }))}
+                    className={`relative py-2 text-center font-sans text-xs transition-all border ${
+                      ocupada
+                        ? 'border-charcoal-light/30 text-cream-muted/30 cursor-not-allowed line-through'
+                        : selected
+                        ? 'border-gold bg-gold/10 text-gold'
+                        : 'border-charcoal-light text-cream-muted hover:border-gold/50 hover:text-cream cursor-pointer'
+                    }`}
+                  >
+                    {ocupada && (
+                      <span className="absolute inset-0 flex items-center justify-center">
+                        <Clock className="w-3 h-3 text-cream-muted/20" />
+                      </span>
+                    )}
+                    <span className={ocupada ? 'opacity-0' : ''}>{h}</span>
+                  </button>
+                )
+              })}
+            </div>
+          )}
+
+          {todasOcupadas && (
+            <p className="font-sans text-xs text-amber-400 mt-2 flex items-center gap-1">
+              <AlertCircle className="w-3 h-3" />
+              Dia completamente ocupado. Por favor escolha outra data.
+            </p>
+          )}
         </div>
 
         {/* Notas */}
@@ -203,7 +282,7 @@ export default function BookingForm() {
 
       <button
         type="submit"
-        disabled={status === 'loading'}
+        disabled={status === 'loading' || !!todasOcupadas}
         className="btn-gold w-full justify-center mt-8 disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {status === 'loading' ? (

@@ -24,6 +24,18 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Check for double booking (ignore cancelled)
+    const existing = await getMarcacoes()
+    const conflict = existing.find(
+      (m) => m.data === data && m.hora === hora && m.estado !== 'cancelado'
+    )
+    if (conflict) {
+      return NextResponse.json(
+        { error: 'Este horário já está ocupado. Por favor escolha outro.' },
+        { status: 409 }
+      )
+    }
+
     const marcacao = await saveMarcacao({ nome, telefone, servico, data, hora, notas })
     return NextResponse.json(marcacao, { status: 201 })
   } catch {
