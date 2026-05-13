@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Scissors, ChevronDown } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 
 export default function Hero() {
   return (
@@ -47,16 +47,6 @@ export default function Hero() {
           <span className="h-px w-12 bg-gold/60" />
         </div>
 
-        {/* Scissors icon */}
-        <div
-          className="flex justify-center mb-6 opacity-0 animate-fade-in animate-delay-100"
-          style={{ animationFillMode: 'forwards' }}
-        >
-          <div className="w-16 h-16 border border-gold/30 flex items-center justify-center">
-            <Scissors className="w-7 h-7 text-gold" />
-          </div>
-        </div>
-
         {/* Heading */}
         <h1
           className="font-serif font-black mb-4 opacity-0 animate-fade-up animate-delay-200"
@@ -88,7 +78,6 @@ export default function Hero() {
           style={{ animationFillMode: 'forwards' }}
         >
           <Link href="/marcacoes" className="btn-gold">
-            <Scissors className="w-4 h-4" />
             Marcar Consulta
           </Link>
           <a href="#servicos" className="btn-outline">

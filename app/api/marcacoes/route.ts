@@ -3,7 +3,8 @@ import { getMarcacoes, saveMarcacao } from '@/lib/marcacoes'
 
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get('x-admin-key')
-  if (authHeader !== process.env.ADMIN_PASSWORD) {
+  const adminPassword = process.env.ADMIN_PASSWORD ?? 'guga2024'
+  if (!authHeader || authHeader !== adminPassword) {
     return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
   }
 

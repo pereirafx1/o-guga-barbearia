@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
+import LogoImage from '@/components/LogoImage'
 
 const links = [
   { href: '#servicos', label: 'Serviços' },
@@ -34,15 +34,7 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="relative w-12 h-12 flex-shrink-0">
-            <Image
-              src="/logo.png"
-              alt="O Guga Barbearia"
-              fill
-              className="object-contain drop-shadow-[0_0_6px_rgba(201,168,76,0.3)]"
-              priority
-            />
-          </div>
+          <LogoImage className="w-12 h-12 drop-shadow-[0_0_8px_rgba(201,168,76,0.4)]" />
           <div className="leading-none">
             <span className="block font-serif text-base font-bold text-cream tracking-wider">O GUGA</span>
             <span className="block font-sans text-[10px] text-gold tracking-[0.3em] uppercase">Barbearia</span>
